@@ -1,0 +1,52 @@
+{
+    "$schema": "https://www.raycast.com/schemas/extension.json",
+    "name": "image-picker-ext",
+    "title": "Image Browser",
+    "description": "Browse, preview and paste images from directories with grid view",
+    "icon": "icon.png",
+    "author": "dfs",
+    "categories": [
+        "Media"
+    ],
+    "license": "MIT",
+    "platforms": [
+        "Windows"
+    ],
+    "commands": [
+        {
+            "name": "image-picker",
+            "title": "Browse Images",
+            "description": "Browse, preview and paste images from directories with grid view",
+            "mode": "view"
+        }
+    ],
+    "preferences": [
+        {
+            "name": "imageDirectory",
+            "title": "Images Directory",
+            "description": "Directory path containing images to browse (.png and .svg files)",
+            "type": "textfield",
+            "required": true,
+            "placeholder": "C:\\Users\\Username\\Pictures"
+        }
+    ],
+    "dependencies": {
+        "@raycast/api": "^1.40.0",
+        "@raycast/utils": "^1.4.8"
+    },
+    "devDependencies": {
+        "@raycast/eslint-config": "^1.0.6",
+        "@types/node": "18.18.4",
+        "@types/react": "19.0.10",
+        "eslint": "^8.51.0",
+        "prettier": "^3.0.3",
+        "typescript": "^5.2.2"
+    },
+    "scripts": {
+        "build": "ray build -e dist",
+        "dev": "ray develop",
+        "fix-lint": "ray lint --fix",
+        "lint": "ray lint",
+        "publish": "ray publish"
+    }
+}
