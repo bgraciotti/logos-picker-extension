@@ -1,8 +1,9 @@
 {
     "$schema": "https://www.raycast.com/schemas/extension.json",
     "name": "image-picker-ext",
-    "title": "Image Browser",
-    "description": "Browse, preview and paste images from directories with grid view",
+    "version": "1.1.0",
+    "title": "Logo Picker",
+    "description": "Browse, preview and paste logos from directories with grid view",
     "icon": "icon.png",
     "author": "dfs",
     "categories": [
@@ -15,8 +16,8 @@
     "commands": [
         {
             "name": "image-picker",
-            "title": "Browse Images",
-            "description": "Browse, preview and paste images from directories with grid view",
+            "title": "Search Logos",
+            "description": "Browse, preview and paste logos from directories with grid view",
             "mode": "view"
         }
     ],

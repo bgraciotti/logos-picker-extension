@@ -1,4 +1,4 @@
-import { Action, ActionPanel, Icon, Grid, showToast, Toast, getPreferenceValues, Clipboard } from "@raycast/api";
+import { Action, ActionPanel, Icon, Grid, showToast, Toast, getPreferenceValues, Clipboard, showInFinder } from "@raycast/api";
 import { useEffect, useState } from "react";
 import * as fs from "fs";
 import * as path from "path";
@@ -121,6 +121,23 @@ export default function Command() {
         }
     };
 
+    const handleShowInFileExplorer = async (image: ImageInfo) => {
+        try {
+            await showInFinder(image.path);
+            await showToast({
+                style: Toast.Style.Success,
+                title: "File Revealed",
+                message: `Revealed ${image.name}${image.extension} in File Explorer`,
+            });
+        } catch (error) {
+            await showToast({
+                style: Toast.Style.Failure,
+                title: "Error Opening File Explorer",
+                message: `Failed to reveal ${image.name}${image.extension}`,
+            });
+        }
+    };
+
     const getIconForExtension = (extension: string): Icon => {
         switch (extension) {
             case '.png':
@@ -155,13 +172,18 @@ export default function Command() {
                                     title="Paste to Focused App"
                                     icon={Icon.Download}
                                     onAction={() => handlePasteToFocusedApp(image)}
-                                    shortcut={{ modifiers: ["ctrl"], key: "k" }}
                                 />
                                 <Action
                                     title="Copy to Clipboard"
                                     icon={Icon.Clipboard}
                                     onAction={() => handleCopyImage(image)}
                                     shortcut={{ modifiers: ["cmd"], key: "c" }}
+                                />
+                                <Action
+                                    title="Show in File Explorer"
+                                    icon={Icon.Folder}
+                                    onAction={() => handleShowInFileExplorer(image)}
+                                    shortcut={{ modifiers: ["ctrl"], key: "k" }}
                                 />
                                 <Action
                                     title="Refresh List"
