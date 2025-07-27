@@ -24,6 +24,10 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 
 ## Changelog
 
+### Version 1.1.1
+- 🎨 **Updated icon**: Improved visual appearance of the extension icon
+- 🧹 **Asset cleanup**: Removed unnecessary demo.gif file
+
 ### Version 1.1.0
 - 🎯 **Changed default behavior**: Enter now pastes directly to focused app (instead of copying to clipboard)
 - 📁 **Added "Show in File Explorer"**: New Ctrl+K shortcut to reveal file location in Windows Explorer
