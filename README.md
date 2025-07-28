@@ -5,12 +5,14 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 ## Features
 - Grid view with 5 columns showing logo thumbnails
 - Support for PNG and SVG files
+- **Smart caching system**: Faster loading with intelligent directory change detection
 - **Enter**: Paste directly to focused app (default action)
 - **Ctrl+C**: Copy to clipboard
 - **Ctrl+K**: Show in File Explorer
-- **Ctrl+R**: Refresh list
+- **Ctrl+R**: Refresh list (forces directory scan, bypassing cache)
 - Configurable directory path
 - Search/filter logos by name
+- Real-time cache status notifications
 
 ## How to install:
 - Install Node JS (winget install -e --id OpenJS.NodeJS)
@@ -23,6 +25,13 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 3. Select a logo and press Enter to paste directly, or use other shortcuts
 
 ## Changelog
+
+### Version 1.2.0
+- 🚀 **Smart caching system**: Added intelligent directory modification tracking for significantly improved performance
+- ⚡ **Performance boost**: Extension now loads much faster on subsequent runs when directory hasn't changed
+- 💬 **Cache status indicators**: Toast messages now clearly indicate whether images were loaded from cache or fresh directory scan
+- 🔄 **Enhanced refresh functionality**: "Refresh List" action now properly forces directory scan, bypassing cache when needed
+- 📊 **Real-time feedback**: Users always know the source of their data (cache vs. directory scan) and loading status
 
 ### Version 1.1.2
 - ⌨️ **Improved action menu UX**: Reordered actions with Copy to Clipboard first, then Paste to Focused App
