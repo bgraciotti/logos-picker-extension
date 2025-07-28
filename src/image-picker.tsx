@@ -13,10 +13,36 @@ interface ImageInfo {
     extension: string;
 }
 
-async function fetchImagesFromDirectory(directory: string): Promise<ImageInfo[]> {
+interface CacheEntry {
+    images: ImageInfo[];
+    lastModified: number;
+    directoryPath: string;
+}
+
+let imageCache: CacheEntry | null = null;
+
+function getDirectoryLastModified(directory: string): number {
+    try {
+        const stats = fs.statSync(directory);
+        return stats.mtime.getTime();
+    } catch (error) {
+        return 0;
+    }
+}
+
+async function fetchImagesFromDirectory(directory: string, forceRefresh: boolean = false): Promise<{images: ImageInfo[], fromCache: boolean}> {
     try {
         if (!fs.existsSync(directory)) {
             throw new Error(`Directory does not exist: ${directory}`);
+        }
+
+        const currentModified = getDirectoryLastModified(directory);
+        
+        // Check if we have valid cache for this directory (unless forced refresh)
+        if (!forceRefresh && imageCache && 
+            imageCache.directoryPath === directory && 
+            imageCache.lastModified === currentModified) {
+            return { images: imageCache.images, fromCache: true };
         }
 
         const files = fs.readdirSync(directory);
@@ -34,7 +60,14 @@ async function fetchImagesFromDirectory(directory: string): Promise<ImageInfo[]>
             }))
             .sort((a, b) => a.name.localeCompare(b.name));
 
-        return images;
+        // Update cache
+        imageCache = {
+            images,
+            lastModified: currentModified,
+            directoryPath: directory
+        };
+
+        return { images, fromCache: false };
     } catch (error) {
         throw new Error(`Failed to read directory: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -57,20 +90,28 @@ export default function Command() {
     const [images, setImages] = useState<ImageInfo[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const loadImages = async () => {
+    const loadImages = async (forceRefresh: boolean = false) => {
         const toast = await showToast({
             style: Toast.Style.Animated,
-            title: "Loading images...",
+            title: forceRefresh ? "Refreshing images..." : "Loading images...",
         });
 
         try {
             setIsLoading(true);
-            const fetchedImages = await fetchImagesFromDirectory(preferences.imageDirectory);
-            setImages(fetchedImages);
+            const result = await fetchImagesFromDirectory(preferences.imageDirectory, forceRefresh);
+            setImages(result.images);
 
             toast.style = Toast.Style.Success;
-            toast.title = "Images Loaded";
-            toast.message = `Found ${fetchedImages.length} images in directory.`;
+            if (forceRefresh) {
+                toast.title = "Images Refreshed";
+                toast.message = `Found ${result.images.length} images (forced directory refresh).`;
+            } else if (result.fromCache) {
+                toast.title = "Images Loaded from Cache";
+                toast.message = `Found ${result.images.length} images (cached - no directory changes detected).`;
+            } else {
+                toast.title = "Images Loaded from Directory";
+                toast.message = `Found ${result.images.length} images (directory scanned for changes).`;
+            }
 
         } catch (error) {
             toast.style = Toast.Style.Failure;
@@ -195,7 +236,7 @@ export default function Command() {
                                     <Action
                                         title="Refresh List"
                                         icon={Icon.ArrowClockwise}
-                                        onAction={loadImages}
+                                        onAction={() => loadImages(true)}
                                         shortcut={Keyboard.Shortcut.Common.Refresh}
                                     />
                                 </ActionPanel.Section>
