@@ -1,4 +1,4 @@
-import { Action, ActionPanel, Icon, Grid, showToast, Toast, getPreferenceValues, Clipboard, showInFinder } from "@raycast/api";
+import { Action, ActionPanel, Icon, Grid, showToast, Toast, getPreferenceValues, Clipboard, showInFinder, Keyboard } from "@raycast/api";
 import { useEffect, useState } from "react";
 import * as fs from "fs";
 import * as path from "path";
@@ -168,29 +168,37 @@ export default function Command() {
                         }}
                         actions={
                             <ActionPanel>
-                                <Action
-                                    title="Paste to Focused App"
-                                    icon={Icon.Download}
-                                    onAction={() => handlePasteToFocusedApp(image)}
-                                />
-                                <Action
-                                    title="Copy to Clipboard"
-                                    icon={Icon.Clipboard}
-                                    onAction={() => handleCopyImage(image)}
-                                    shortcut={{ modifiers: ["cmd"], key: "c" }}
-                                />
-                                <Action
-                                    title="Show in File Explorer"
-                                    icon={Icon.Folder}
-                                    onAction={() => handleShowInFileExplorer(image)}
-                                    shortcut={{ modifiers: ["ctrl"], key: "k" }}
-                                />
-                                <Action
-                                    title="Refresh List"
-                                    icon={Icon.ArrowClockwise}
-                                    onAction={loadImages}
-                                    shortcut={{ modifiers: ["cmd"], key: "r" }}
-                                />
+                                <ActionPanel.Section>
+                                    <Action
+                                        title="Paste to Focused App"
+                                        icon={Icon.Download}
+                                        onAction={() => handlePasteToFocusedApp(image)}
+                                    />
+                                    <Action
+                                        title="Copy to Clipboard"
+                                        icon={Icon.Clipboard}
+                                        onAction={() => handleCopyImage(image)}
+                                        shortcut={Keyboard.Shortcut.Common.Copy}
+                                    />
+                                </ActionPanel.Section>
+                                
+                                <ActionPanel.Section>
+                                    <Action
+                                        title="Show in File Explorer"
+                                        icon={Icon.Folder}
+                                        onAction={() => handleShowInFileExplorer(image)}
+                                        shortcut={Keyboard.Shortcut.Common.Open}
+                                    />
+                                </ActionPanel.Section>
+                                
+                                <ActionPanel.Section>
+                                    <Action
+                                        title="Refresh List"
+                                        icon={Icon.ArrowClockwise}
+                                        onAction={loadImages}
+                                        shortcut={Keyboard.Shortcut.Common.Refresh}
+                                    />
+                                </ActionPanel.Section>
                             </ActionPanel>
                         }
                     />

@@ -6,9 +6,9 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 - Grid view with 5 columns showing logo thumbnails
 - Support for PNG and SVG files
 - **Enter**: Paste directly to focused app (default action)
-- **Cmd+C**: Copy to clipboard
+- **Ctrl+C**: Copy to clipboard
 - **Ctrl+K**: Show in File Explorer
-- **Cmd+R**: Refresh list
+- **Ctrl+R**: Refresh list
 - Configurable directory path
 - Search/filter logos by name
 
@@ -23,6 +23,13 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 3. Select a logo and press Enter to paste directly, or use other shortcuts
 
 ## Changelog
+
+### Version 1.1.2
+- ⌨️ **Improved action menu UX**: Reordered actions with Copy to Clipboard first, then Paste to Focused App
+- 📱 **Added visual dividers**: Actions are now grouped with clean separators for better organization
+- 🔧 **Fixed Windows shortcuts**: All keyboard shortcuts now correctly use Ctrl instead of Cmd for Windows compatibility
+- ✨ **Enhanced shortcuts display**: Keyboard shortcuts are now visible in the actions menu for better discoverability
+- 📝 **Updated documentation**: README now accurately reflects Windows keyboard shortcuts
 
 ### Version 1.1.1
 - 🎨 **Updated icon**: Improved visual appearance of the extension icon
