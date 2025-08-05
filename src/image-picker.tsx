@@ -4,13 +4,20 @@ import * as fs from "fs";
 import * as path from "path";
 
 interface Preferences {
-    imageDirectory: string;
+    directory1: string;
+    directory2?: string;
+    directory3?: string;
+    directory4?: string;
+    directory5?: string;
+    defaultDirectory?: string;
 }
 
 interface ImageInfo {
     name: string;
     path: string;
     extension: string;
+    directory: string;
+    directoryName: string;
 }
 
 interface CacheEntry {
@@ -19,7 +26,11 @@ interface CacheEntry {
     directoryPath: string;
 }
 
-let imageCache: CacheEntry | null = null;
+interface DirectoriesCache {
+    [key: string]: CacheEntry;
+}
+
+let directoriesCache: DirectoriesCache = {};
 
 function getDirectoryLastModified(directory: string): number {
     try {
@@ -30,6 +41,24 @@ function getDirectoryLastModified(directory: string): number {
     }
 }
 
+function parseDirectories(preferences: Preferences): string[] {
+    const directories = [
+        preferences.directory1,
+        preferences.directory2,
+        preferences.directory3,
+        preferences.directory4,
+        preferences.directory5
+    ];
+    
+    return directories
+        .filter(dir => dir && dir.trim().length > 0)
+        .map(dir => dir!.trim());
+}
+
+function getDirectoryDisplayName(directory: string): string {
+    return path.basename(directory) || directory;
+}
+
 async function fetchImagesFromDirectory(directory: string, forceRefresh: boolean = false): Promise<{images: ImageInfo[], fromCache: boolean}> {
     try {
         if (!fs.existsSync(directory)) {
@@ -37,16 +66,17 @@ async function fetchImagesFromDirectory(directory: string, forceRefresh: boolean
         }
 
         const currentModified = getDirectoryLastModified(directory);
+        const cacheKey = directory;
         
         // Check if we have valid cache for this directory (unless forced refresh)
-        if (!forceRefresh && imageCache && 
-            imageCache.directoryPath === directory && 
-            imageCache.lastModified === currentModified) {
-            return { images: imageCache.images, fromCache: true };
+        if (!forceRefresh && directoriesCache[cacheKey] && 
+            directoriesCache[cacheKey].lastModified === currentModified) {
+            return { images: directoriesCache[cacheKey].images, fromCache: true };
         }
 
         const files = fs.readdirSync(directory);
         const supportedExtensions = ['.png', '.svg'];
+        const directoryName = getDirectoryDisplayName(directory);
         
         const images: ImageInfo[] = files
             .filter(file => {
@@ -56,12 +86,14 @@ async function fetchImagesFromDirectory(directory: string, forceRefresh: boolean
             .map(file => ({
                 name: path.basename(file, path.extname(file)),
                 path: path.join(directory, file),
-                extension: path.extname(file).toLowerCase()
+                extension: path.extname(file).toLowerCase(),
+                directory: directory,
+                directoryName: directoryName
             }))
             .sort((a, b) => a.name.localeCompare(b.name));
 
         // Update cache
-        imageCache = {
+        directoriesCache[cacheKey] = {
             images,
             lastModified: currentModified,
             directoryPath: directory
@@ -71,6 +103,32 @@ async function fetchImagesFromDirectory(directory: string, forceRefresh: boolean
     } catch (error) {
         throw new Error(`Failed to read directory: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
+}
+
+async function fetchImagesFromMultipleDirectories(directories: string[], forceRefresh: boolean = false): Promise<{images: ImageInfo[], fromCache: boolean}> {
+    const results = await Promise.allSettled(
+        directories.map(dir => fetchImagesFromDirectory(dir, forceRefresh))
+    );
+    
+    let allImages: ImageInfo[] = [];
+    let anyFromCache = false;
+    let anyFresh = false;
+    
+    results.forEach((result) => {
+        if (result.status === 'fulfilled') {
+            allImages = allImages.concat(result.value.images);
+            if (result.value.fromCache) anyFromCache = true;
+            else anyFresh = true;
+        }
+    });
+    
+    // Sort all images by name
+    allImages.sort((a, b) => a.name.localeCompare(b.name));
+    
+    return { 
+        images: allImages, 
+        fromCache: anyFromCache && !anyFresh 
+    };
 }
 
 async function copyImageToClipboard(imagePath: string): Promise<void> {
@@ -89,6 +147,44 @@ export default function Command() {
     const preferences = getPreferenceValues<Preferences>();
     const [images, setImages] = useState<ImageInfo[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const getInitialDirectory = (): string => {
+        const defaultDirPref = preferences.defaultDirectory || 'all';
+        if (defaultDirPref === 'all') return 'all';
+        
+        // Map the preference key to actual directory path for the dropdown
+        const dirValue = preferences[defaultDirPref as keyof Preferences] as string;
+        if (dirValue && dirValue.trim()) {
+            return dirValue.trim(); // Return the actual directory path
+        }
+        
+        return 'all'; // Fallback to all directories
+    };
+    
+    const [selectedDirectory, setSelectedDirectory] = useState<string>(getInitialDirectory());
+    
+    const directories = parseDirectories(preferences);
+    const directoryOptions = [
+        { title: 'All Directories', value: 'all' },
+        ...directories.map(dir => ({
+            title: getDirectoryDisplayName(dir),
+            value: dir
+        }))
+    ];
+    
+    const cycleToNextDirectory = () => {
+        const allOptions = directoryOptions.map(opt => opt.value);
+        const currentIndex = allOptions.indexOf(selectedDirectory);
+        const nextIndex = (currentIndex + 1) % allOptions.length;
+        const nextDirectory = allOptions[nextIndex];
+        setSelectedDirectory(nextDirectory);
+        
+        // Show toast to indicate directory change
+        showToast({
+            style: Toast.Style.Success,
+            title: "Switched to:",
+            message: nextDirectory === 'all' ? 'All Directories' : getDirectoryDisplayName(nextDirectory)
+        });
+    };
 
     const loadImages = async (forceRefresh: boolean = false) => {
         const toast = await showToast({
@@ -98,19 +194,28 @@ export default function Command() {
 
         try {
             setIsLoading(true);
-            const result = await fetchImagesFromDirectory(preferences.imageDirectory, forceRefresh);
+            let result;
+            
+            if (selectedDirectory === 'all') {
+                result = await fetchImagesFromMultipleDirectories(directories, forceRefresh);
+            } else {
+                result = await fetchImagesFromDirectory(selectedDirectory, forceRefresh);
+            }
+            
             setImages(result.images);
 
             toast.style = Toast.Style.Success;
+            const dirInfo = selectedDirectory === 'all' ? 'all directories' : getDirectoryDisplayName(selectedDirectory);
+            
             if (forceRefresh) {
                 toast.title = "Images Refreshed";
-                toast.message = `Found ${result.images.length} images (forced directory refresh).`;
+                toast.message = `Found ${result.images.length} images from ${dirInfo} (forced refresh).`;
             } else if (result.fromCache) {
                 toast.title = "Images Loaded from Cache";
-                toast.message = `Found ${result.images.length} images (cached - no directory changes detected).`;
+                toast.message = `Found ${result.images.length} images from ${dirInfo} (cached).`;
             } else {
                 toast.title = "Images Loaded from Directory";
-                toast.message = `Found ${result.images.length} images (directory scanned for changes).`;
+                toast.message = `Found ${result.images.length} images from ${dirInfo} (scanned).`;
             }
 
         } catch (error) {
@@ -125,6 +230,12 @@ export default function Command() {
 
     useEffect(() => {
         loadImages();
+    }, [selectedDirectory]);
+    
+    // Set initial directory based on preference when component mounts
+    useEffect(() => {
+        const initialDir = getInitialDirectory();
+        setSelectedDirectory(initialDir);
     }, []);
 
     const handleCopyImage = async (image: ImageInfo) => {
@@ -194,8 +305,23 @@ export default function Command() {
         <Grid 
             isLoading={isLoading} 
             searchBarPlaceholder="Filter images..."
+            searchBarAccessory={
+                <Grid.Dropdown
+                    tooltip="Select Directory"
+                    onChange={setSelectedDirectory}
+                    value={selectedDirectory}
+                >
+                    {directoryOptions.map((option) => (
+                        <Grid.Dropdown.Item
+                            key={option.value}
+                            title={option.title}
+                            value={option.value}
+                        />
+                    ))}
+                </Grid.Dropdown>
+            }
             columns={5}
-            fit={Grid.Fit.Adaptive}
+            fit={Grid.Fit.Contain}
             inset={Grid.Inset.Medium}
         >
             {images.length > 0 ? (
@@ -203,7 +329,7 @@ export default function Command() {
                     <Grid.Item
                         key={image.path}
                         title={image.name}
-                        subtitle={image.extension.toUpperCase()}
+                        subtitle={`${image.extension.toUpperCase()} • ${image.directoryName}`}
                         content={{ 
                             source: image.path
                         }}
@@ -240,6 +366,15 @@ export default function Command() {
                                         shortcut={Keyboard.Shortcut.Common.Refresh}
                                     />
                                 </ActionPanel.Section>
+                                
+                                <ActionPanel.Section>
+                                    <Action
+                                        title="Next Directory"
+                                        icon={Icon.ArrowRight}
+                                        onAction={cycleToNextDirectory}
+                                        shortcut={{ modifiers: ["ctrl"], key: "j" }}
+                                    />
+                                </ActionPanel.Section>
                             </ActionPanel>
                         }
                     />
@@ -250,7 +385,9 @@ export default function Command() {
                     description={
                         isLoading 
                             ? "Please wait..." 
-                            : `No .png or .svg files found in: ${preferences.imageDirectory}`
+                            : selectedDirectory === 'all'
+                                ? `No .png or .svg files found in any configured directory`
+                                : `No .png or .svg files found in: ${getDirectoryDisplayName(selectedDirectory)}`
                     }
                     icon={Icon.Image}
                 />

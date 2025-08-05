@@ -3,14 +3,17 @@
 Browse, preview and paste logos from directories with a beautiful grid view interface.
 
 ## Features
-- Grid view with 5 columns showing logo thumbnails
+- **Multiple directories support**: Configure up to 5 different logo directories
+- **Directory selector**: Dropdown to switch between directories or view all at once
+- **Default directory**: Set which directory opens by default
+- **Directory navigation**: Cycle through directories with Ctrl+J shortcut
+- Grid view with 5 columns showing logo thumbnails (fixed aspect ratio)
 - Support for PNG and SVG files
 - **Smart caching system**: Faster loading with intelligent directory change detection
 - **Enter**: Paste directly to focused app (default action)
 - **Ctrl+C**: Copy to clipboard
 - **Ctrl+K**: Show in File Explorer
 - **Ctrl+R**: Refresh list (forces directory scan, bypassing cache)
-- Configurable directory path
 - Search/filter logos by name
 - Real-time cache status notifications
 
@@ -20,11 +23,26 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 - Run: "npm ci" then "npm run dev", which adds it to Raycast
 
 ## Usage:
-1. Configure the logos directory in extension preferences
+1. Configure your logo directories in extension preferences:
+   - **Directory 1** (required): Your primary logos folder
+   - **Directory 2-5** (optional): Additional logo folders
+   - **Default Directory**: Choose which directory opens by default
 2. Launch "Search Logos" to browse logos in grid view
-3. Select a logo and press Enter to paste directly, or use other shortcuts
+3. Use the dropdown to switch between directories or view "All Directories"
+4. Select a logo and press Enter to paste directly, or use other shortcuts
+5. Use Ctrl+J to cycle through directories quickly
 
 ## Changelog
+
+### Version 1.3.0
+- 📁 **Multiple directories support**: Configure up to 5 different logo directories
+- 🔽 **Directory selector dropdown**: Switch between directories or view all at once
+- 🎯 **Default directory preference**: Set which directory opens by default when launching
+- ⏭️ **Directory navigation**: "Next Directory" action with Ctrl+J keyboard shortcut to cycle through directories
+- 🖼️ **Fixed thumbnails**: Improved aspect ratio preservation to prevent image cropping
+- 🎛️ **Enhanced preferences**: Replaced single directory field with 5 individual directory pickers
+- 💬 **Better feedback**: Toast notifications show which directory is currently active
+- 🧹 **Cleaner interface**: Streamlined action menu without unnecessary section titles
 
 ### Version 1.2.0
 - 🚀 **Smart caching system**: Added intelligent directory modification tracking for significantly improved performance
