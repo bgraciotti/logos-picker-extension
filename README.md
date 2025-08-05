@@ -6,7 +6,7 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 - **Multiple directories support**: Configure up to 5 different logo directories
 - **Directory selector**: Dropdown to switch between directories or view all at once
 - **Default directory**: Set which directory opens by default
-- **Directory navigation**: Cycle through directories with Ctrl+J shortcut
+- **Directory navigation**: "Next Directory" action to cycle through directories
 - Grid view with 5 columns showing logo thumbnails (fixed aspect ratio)
 - Support for PNG and SVG files
 - **Smart caching system**: Faster loading with intelligent directory change detection
@@ -30,7 +30,7 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 2. Launch "Search Logos" to browse logos in grid view
 3. Use the dropdown to switch between directories or view "All Directories"
 4. Select a logo and press Enter to paste directly, or use other shortcuts
-5. Use Ctrl+J to cycle through directories quickly
+5. Use "Next Directory" action (Ctrl+K menu) to cycle through directories
 
 ## Changelog
 
@@ -38,11 +38,10 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 - 📁 **Multiple directories support**: Configure up to 5 different logo directories
 - 🔽 **Directory selector dropdown**: Switch between directories or view all at once
 - 🎯 **Default directory preference**: Set which directory opens by default when launching
-- ⏭️ **Directory navigation**: "Next Directory" action with Ctrl+J keyboard shortcut to cycle through directories
+- ⏭️ **Directory navigation**: "Next Directory" action to cycle through directories via action menu
 - 🖼️ **Fixed thumbnails**: Improved aspect ratio preservation to prevent image cropping
-- 🎛️ **Enhanced preferences**: Replaced single directory field with 5 individual directory pickers
+- 🎛️ **Enhanced preferences**: Native directory pickers for easier configuration
 - 💬 **Better feedback**: Toast notifications show which directory is currently active
-- 🧹 **Cleaner interface**: Streamlined action menu without unnecessary section titles
 
 ### Version 1.2.0
 - 🚀 **Smart caching system**: Added intelligent directory modification tracking for significantly improved performance
