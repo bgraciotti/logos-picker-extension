@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2025-08-06
+
+### Added
+- **Configurable cache toggle**: New preference to enable/disable image caching system
+- **Cache control**: Users can now choose to always scan directories fresh or use caching for faster loading
+- **Enhanced cache status feedback**: Toast messages now indicate cache status (enabled/disabled)
+
+### Changed
+- **Cache behavior**: Cache is now configurable and enabled by default via extension preferences
+- **Improved user control**: Users have full control over caching behavior through settings
+- **Better performance awareness**: Clear indication when cache is disabled vs enabled
+
+### Technical
+- Added `enableCache` preference with checkbox type and descriptive label
+- Enhanced cache-related functions to accept `cacheEnabled` parameter
+- Updated toast notifications to reflect current cache configuration
+
 ## [1.3.0] - 2025-08-05
 
 ### Added
