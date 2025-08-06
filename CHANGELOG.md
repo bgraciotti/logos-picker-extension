@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.1] - 2025-08-06
+
+### Changed
+- **Asset organization**: Moved extension icon to `assets/` folder for better project structure
+- **Dependency cleanup**: Removed unused `@raycast/utils` dependency to reduce bundle size
+
+### Technical
+- Updated `package.json` icon path from `icon.png` to `assets/Icon.png`
+- Cleaned up dependencies removing unused `@raycast/utils` package
+- Improved project structure with organized assets folder
+
 ## [1.4.0] - 2025-08-06
 
 ### Added

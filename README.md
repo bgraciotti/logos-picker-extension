@@ -35,6 +35,11 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 
 ## Changelog
 
+### Version 1.4.1
+- 🧹 **Asset organization**: Moved extension icon to `assets/` folder for better project structure
+- 📦 **Dependency cleanup**: Removed unused `@raycast/utils` dependency to reduce bundle size
+- 🔧 **Technical improvements**: Better organized project structure and cleaner dependencies
+
 ### Version 1.4.0
 - ⚙️ **Configurable cache toggle**: New preference to enable/disable the image caching system
 - 🎛️ **Enhanced user control**: Users can now choose to always scan directories fresh or use caching for faster loading
