@@ -9,7 +9,7 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 - **Directory navigation**: "Next Directory" action to cycle through directories
 - Grid view with 5 columns showing logo thumbnails (fixed aspect ratio)
 - Support for PNG and SVG files
-- **Smart caching system**: Faster loading with intelligent directory change detection
+- **Smart caching system**: Configurable caching for faster loading with intelligent directory change detection
 - **Enter**: Paste directly to focused app (default action)
 - **Ctrl+C**: Copy to clipboard
 - **Ctrl+K**: Show in File Explorer
@@ -27,12 +27,19 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
    - **Directory 1** (required): Your primary logos folder
    - **Directory 2-5** (optional): Additional logo folders
    - **Default Directory**: Choose which directory opens by default
+   - **Enable Image Cache**: Toggle to enable/disable caching for faster loading
 2. Launch "Search Logos" to browse logos in grid view
 3. Use the dropdown to switch between directories or view "All Directories"
 4. Select a logo and press Enter to paste directly, or use other shortcuts
 5. Use "Next Directory" action (Ctrl+K menu) to cycle through directories
 
 ## Changelog
+
+### Version 1.4.0
+- ⚙️ **Configurable cache toggle**: New preference to enable/disable the image caching system
+- 🎛️ **Enhanced user control**: Users can now choose to always scan directories fresh or use caching for faster loading
+- 💬 **Improved cache feedback**: Toast messages now clearly indicate cache status (enabled/disabled) and loading source
+- 🔧 **Better performance control**: Cache is enabled by default but can be disabled via extension preferences for always-fresh scans
 
 ### Version 1.3.0
 - 📁 **Multiple directories support**: Configure up to 5 different logo directories
