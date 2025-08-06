@@ -9,7 +9,15 @@
       "Bash(git remote add:*)",
       "Bash(git push:*)",
       "Bash(gh auth:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(gh repo sync:*)",
+      "Bash(git rm:*)",
+      "Bash(cp:*)",
+      "Bash(ray build:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run fix-lint)",
+      "Bash(npx tsc:*)"
     ],
     "deny": []
   }

@@ -19,7 +19,9 @@ type ExtensionPreferences = {
   /** Directory 5 (Optional) - Fifth directory path containing images to browse */
   "directory5"?: string,
   /** Default Directory - Which directory to show by default when opening the extension */
-  "defaultDirectory": "all" | "directory1" | "directory2" | "directory3" | "directory4" | "directory5"
+  "defaultDirectory": "all" | "directory1" | "directory2" | "directory3" | "directory4" | "directory5",
+  /** Enable Image Cache - Cache scanned images for faster loading. Disable to always scan directories fresh. */
+  "enableCache": boolean
 }
 
 /** Preferences accessible in all the extension's commands */
