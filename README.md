@@ -35,6 +35,11 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 
 ## Changelog
 
+### Version 1.4.3
+- 🔧 **Fixed extension icon**: Resolved issue where extension icon wasn't appearing in Raycast interface
+- 📂 **Icon path correction**: Moved icon from assets/ to root directory where Raycast expects to find it
+- 🧹 **Project cleanup**: Removed duplicate icon files and improved project structure
+
 ### Version 1.4.2
 - 🧹 **Code cleanup**: Removed non-functional "Next Directory" keyboard shortcut action that wasn't working properly
 - ⌨️ **Improved keyboard navigation**: Users can now use the native Raycast shortcut `Ctrl+P` to access the directory dropdown
@@ -42,7 +47,7 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 - 📚 **Documentation fixes**: Corrected keyboard shortcuts and removed references to obsolete features
 
 ### Version 1.4.1
-- 🧹 **Asset organization**: Moved extension icon to `assets/` folder for better project structure
+- 🧹 **Asset organization**: Reorganized project assets and dependencies
 - 📦 **Dependency cleanup**: Removed unused `@raycast/utils` dependency to reduce bundle size
 - 🔧 **Technical improvements**: Better organized project structure and cleaner dependencies
 
