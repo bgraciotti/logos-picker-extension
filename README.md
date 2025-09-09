@@ -6,13 +6,13 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 - **Multiple directories support**: Configure up to 5 different logo directories
 - **Directory selector**: Dropdown to switch between directories or view all at once
 - **Default directory**: Set which directory opens by default
-- **Directory navigation**: "Next Directory" action to cycle through directories
+- **Directory navigation**: Use `Ctrl+P` to access directory dropdown via keyboard
 - Grid view with 5 columns showing logo thumbnails (fixed aspect ratio)
 - Support for PNG and SVG files
 - **Smart caching system**: Configurable caching for faster loading with intelligent directory change detection
 - **Enter**: Paste directly to focused app (default action)
 - **Ctrl+C**: Copy to clipboard
-- **Ctrl+K**: Show in File Explorer
+- **Ctrl+O**: Show in File Explorer
 - **Ctrl+R**: Refresh list (forces directory scan, bypassing cache)
 - Search/filter logos by name
 - Real-time cache status notifications
@@ -31,9 +31,15 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 2. Launch "Search Logos" to browse logos in grid view
 3. Use the dropdown to switch between directories or view "All Directories"
 4. Select a logo and press Enter to paste directly, or use other shortcuts
-5. Use "Next Directory" action (Ctrl+K menu) to cycle through directories
+5. Use `Ctrl+P` to access the directory dropdown via keyboard
 
 ## Changelog
+
+### Version 1.4.2
+- 🧹 **Code cleanup**: Removed non-functional "Next Directory" keyboard shortcut action that wasn't working properly
+- ⌨️ **Improved keyboard navigation**: Users can now use the native Raycast shortcut `Ctrl+P` to access the directory dropdown
+- 🔧 **Technical improvements**: Cleaned up unused functions, imports and simplified component structure for better maintainability
+- 📚 **Documentation fixes**: Corrected keyboard shortcuts and removed references to obsolete features
 
 ### Version 1.4.1
 - 🧹 **Asset organization**: Moved extension icon to `assets/` folder for better project structure
