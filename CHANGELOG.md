@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.3] - 2025-09-09
+
+### Fixed
+- **Extension icon**: Fixed issue where extension icon wasn't appearing in Raycast
+- **Icon path**: Corrected icon file path configuration in package.json to point to root directory instead of assets folder
+
+### Technical
+- Moved icon.png from assets/ to root directory for proper Raycast recognition
+- Updated icon path reference in package.json from "assets/icon.png" to "icon.png"
+- Removed duplicate icon files to clean up project structure
+
 ## [1.4.2] - 2025-09-09
 
 ### Removed

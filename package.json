@@ -1,10 +1,10 @@
 {
     "$schema": "https://www.raycast.com/schemas/extension.json",
     "name": "image-picker-ext",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "title": "Logo Picker",
     "description": "Browse, preview and paste logos from directories with grid view",
-    "icon": "assets/Icon.png",
+    "icon": "icon.png",
     "author": "dfs",
     "categories": [
         "Media"
