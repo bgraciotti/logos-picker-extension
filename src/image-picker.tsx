@@ -195,21 +195,6 @@ export default function Command() {
         })),
     ]
 
-    const cycleToNextDirectory = () => {
-        const allOptions = directoryOptions.map(opt => opt.value)
-        const currentIndex = allOptions.indexOf(selectedDirectory)
-        const nextIndex = (currentIndex + 1) % allOptions.length
-        const nextDirectory = allOptions[nextIndex]
-        setSelectedDirectory(nextDirectory)
-
-        // Show toast to indicate directory change
-        showToast({
-            style: Toast.Style.Success,
-            title: "Switched to:",
-            message: nextDirectory === "all" ? "All Directories" : getDirectoryDisplayName(nextDirectory),
-        })
-    }
-
     const loadImages = async (forceRefresh: boolean = false) => {
         const toast = await showToast({
             style: Toast.Style.Animated,
@@ -255,12 +240,6 @@ export default function Command() {
     useEffect(() => {
         loadImages()
     }, [selectedDirectory])
-
-    // Set initial directory based on preference when component mounts
-    useEffect(() => {
-        const initialDir = getInitialDirectory()
-        setSelectedDirectory(initialDir)
-    }, [])
 
     const handleCopyImage = async (image: ImageInfo) => {
         try {
@@ -369,15 +348,6 @@ export default function Command() {
                                         icon={Icon.ArrowClockwise}
                                         onAction={() => loadImages(true)}
                                         shortcut={Keyboard.Shortcut.Common.Refresh}
-                                    />
-                                </ActionPanel.Section>
-
-                                <ActionPanel.Section>
-                                    <Action
-                                        title="Next Directory"
-                                        icon={Icon.ArrowRight}
-                                        onAction={cycleToNextDirectory}
-                                        shortcut={{ modifiers: ["ctrl"], key: "j" }}
                                     />
                                 </ActionPanel.Section>
                             </ActionPanel>

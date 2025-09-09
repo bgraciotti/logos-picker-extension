@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.2] - 2025-09-09
+
+### Removed
+- **Next Directory action**: Removed non-functional "Next Directory" keyboard shortcut action that wasn't working properly
+
+### Improved
+- **Code cleanup**: Cleaned up unused functions and imports for better maintainability
+- **Keyboard navigation**: Users can now use the native Raycast shortcut `Ctrl+P` to access the directory dropdown via keyboard
+
+### Technical
+- Removed `cycleToNextDirectory` function and related action panel section
+- Simplified component structure without unnecessary useCallback complexity
+- Improved code readability and reduced potential bugs
+
 ## [1.4.1] - 2025-08-06
 
 ### Changed
