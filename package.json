@@ -4,7 +4,7 @@
     "version": "1.4.4",
     "title": "Logo Picker",
     "description": "Browse, preview and paste logos from directories with grid view",
-    "icon": "icon.png",
+    "icon": "assets/icon.png",
     "author": "dfs",
     "categories": [
         "Media"
