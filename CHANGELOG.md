@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.4] - 2025-12-04
+
+### Fixed
+- 🔧 **Icon display**: Fixed issue where extension icon wasn't appearing in Raycast by adding icon to `assets/` folder
+- 📁 **File structure**: Icon now properly located in both `assets/icon.png` and root `icon.png` following Raycast best practices
+
+### Technical
+- Created `assets/` folder and copied icon.png there for proper Raycast recognition
+- Maintained icon.png in root folder for backward compatibility
+- Follows the same pattern as word-counter and kill-processes extensions
+
 ## [1.4.3] - 2025-09-09
 
 ### Fixed
