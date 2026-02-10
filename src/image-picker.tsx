@@ -315,7 +315,8 @@ export default function Command() {
                         title={image.name}
                         subtitle={`${image.extension.toUpperCase()} • ${image.directoryName}`}
                         content={{
-                            source: image.path,
+                            // Convert Windows path to file:// URL (required for Raycast Windows v0.44+)
+                            source: `file:///${image.path.replace(/\\/g, "/")}`,
                         }}
                         actions={
                             <ActionPanel>
