@@ -35,6 +35,12 @@ Browse, preview and paste logos from directories with a beautiful grid view inte
 
 ## Changelog
 
+### Version 1.4.5
+- 🔧 **Thumbnail display fix**: Fixed issue where logo thumbnails were not loading on Raycast Windows v0.44+. The fix converts Windows file paths to `file:///` URLs with forward slashes, which is now required by Raycast.
+
+### Version 1.4.4
+- 🔧 **Fixed extension icon**: Resolved issue where extension icon wasn't appearing in Raycast interface
+
 ### Version 1.4.3
 - 🔧 **Fixed extension icon**: Resolved issue where extension icon wasn't appearing in Raycast interface
 - 📂 **Icon path correction**: Moved icon from assets/ to root directory where Raycast expects to find it
